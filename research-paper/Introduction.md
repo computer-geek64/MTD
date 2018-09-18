@@ -14,11 +14,5 @@ new technologies in machine learning, tropospheric ozone can
 be forecasted. **Deep learning neural networks can accurately
 predict tropospheric ozone.**<sup name="2">[2]</sup>
 
-1. Hey
-  1. b
-  1. b
-
-
-[Hook](#1)
-
-[Thesis](#2)
+1. [Hook](#1)
+2. [Thesis](#2)
