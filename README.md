@@ -1,2 +1,2 @@
 # Deep Learning for Tropospheric Ozone Predictions MTD
-*Developed by Ashish D'Souza*
+*Ashish D'Souza, Engineering Design Technology Senior at POLYTECH High School*
