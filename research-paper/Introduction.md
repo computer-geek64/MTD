@@ -1,7 +1,7 @@
 # Introduction
 *Deep Learning for Tropospheric Ozone Predictions*
 
-The average reading speed is 200 words per minute.<sup>[1]</sup>
+**The average reading speed is 200 words per minute.**<sup>[[1]](#1)</sup>
 Reading is a skill that most people take for granted; it is a
 highly complex process. Yet after billions of years of
 evolution and intensive learning, one reads as simply as one
@@ -12,37 +12,6 @@ as complex as reading. Tropospheric ozone is a hazardous
 pollutant that harms life and degrades materials. With these
 new technologies in machine learning, tropospheric ozone can
 be forecasted. **Deep learning neural networks can accurately
-predict tropospheric ozone.**<sup>[2]</sup>
-.
+predict tropospheric ozone.**<sup>[[2]](#2)</sup>
 
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-.
-
-[1] Hook
-
-[2] Thesis
-
-[Test](https://github.com/computer-geek64/MTD/blob/master/research-paper/Introduction.md#1)
+<a name="1">3</a>
