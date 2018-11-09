@@ -5,17 +5,17 @@
 import os
 import numpy as np
 from sodapy import Socrata
+import sodapy
 
 
 class Data:
-    def __init__(self):
-        if "soda_token" not in os.environ:
-            print("SODA authentication token not set in \"soda_token\" environment variable")
+    def __init__(self, domain, **kwargs):
+        soda_token = ""
+        if "soda_token" in kwargs.keys():
+            soda_token = kwargs["soda_token"]
+        elif "soda_token" in os.environ:
+            soda_token = os.environ["soda_token"]
+        else:
+            print("SODA authentication token not specified")
             exit(0)
-
-
-if "soda_token" not in os.environ:
-    print("SODA authentication token not set in \"soda_token\" environment variable")
-    exit(0)
-client = Socrata("data.delaware.gov", os.environ["soda_token"])
-client.get("")
+        self.client = Socrata(domain, soda_token)
