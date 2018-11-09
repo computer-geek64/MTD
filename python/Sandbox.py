@@ -8,8 +8,7 @@ from sodapy import Socrata
 from Data import Data
 
 
-Data(website="data.delaware.gov", environ="soda_token")
-exit(0)
+data = Data("data.delaware.gov", environ="soda_token")
 client = Socrata("data.delaware.gov", os.environ["soda_token"])
 results = client.get("2bb6-s69t", where="date_time=\"2015-10-28T20:00:00.000\" AND countycode=3 AND sta_stationname=\"Martin Luther King\"")
 # results_df = pd.DataFrame.from_records(results)

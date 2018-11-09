@@ -19,3 +19,13 @@ class Data:
             print("SODA authentication token not specified")
             exit(0)
         self.client = Socrata(domain, soda_token)
+
+    def format_query(self, queries, **kwargs):
+        query = " AND ".join(queries)
+        for key, value in kwargs.items():
+            query += " AND " + key + "=\"" + value + "\""
+        return query
+
+    def download(self, dataset_identifier, query):
+        return self.client.get(dataset_identifier, where=query)
+
