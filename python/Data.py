@@ -5,11 +5,10 @@
 import os
 import numpy as np
 from sodapy import Socrata
-import sodapy
 
 
-class Data:
-    def __init__(self, domain, **kwargs):
+class SODA:
+    def __init__(self, domain: str, **kwargs: dict) -> None:
         soda_token = ""
         if "soda_token" in kwargs.keys():
             soda_token = kwargs["soda_token"]
@@ -20,12 +19,14 @@ class Data:
             exit(0)
         self.client = Socrata(domain, soda_token)
 
-    def format_query(self, queries, **kwargs):
+    def format_query(self, queries: list, **kwargs: dict) -> str:
         query = " AND ".join(queries)
         for key, value in kwargs.items():
             query += " AND " + key + "=\"" + value + "\""
         return query
 
-    def download(self, dataset_identifier, query):
+    def download(self, dataset_identifier: str, query: str) -> list:
         return self.client.get(dataset_identifier, where=query)
 
+
+class Format:
