@@ -1,6 +1,6 @@
 # Data.py
 # Ashish D'Souza
-# November 9th, 2018
+# November 13th, 2018
 
 import os
 import numpy as np
@@ -8,7 +8,7 @@ from sodapy import Socrata
 
 
 class SODA:
-    def __init__(self, domain: str, **kwargs: dict) -> None:
+    def __init__(self, domain: str, dataset_identifier: str, **kwargs: dict) -> None:
         soda_token = ""
         if "soda_token" in kwargs.keys():
             soda_token = kwargs["soda_token"]
@@ -18,15 +18,17 @@ class SODA:
             print("SODA authentication token not specified")
             exit(0)
         self.client = Socrata(domain, soda_token)
+        self.dataset_identifier = dataset_identifier
+        self.where = ""
 
-    def format_query(self, queries: list, **kwargs: dict) -> str:
-        query = " AND ".join(queries)
+    def get_columns(self):
+        return list(self.client.get(self.dataset_identifier, limit=1)[0].keys())
+
+    def format_where_query(self, where_queries: list, **kwargs: dict) -> str:
+        self.where = " AND ".join(where_queries)
         for key, value in kwargs.items():
-            query += " AND " + key + "=\"" + value + "\""
-        return query
+            self.where += " AND " + key + "=\"" + value + "\""
+        return self.where
 
-    def download(self, dataset_identifier: str, query: str) -> list:
-        return self.client.get(dataset_identifier, where=query)
-
-
-class Format:
+    def download(self, **kwargs) -> list:
+        return self.client.get(self.dataset_identifier, **kwargs)
