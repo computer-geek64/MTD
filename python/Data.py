@@ -36,7 +36,7 @@ class SODA:
 
 
 def iqr(dataset):
-    q25, q75 = np.percentile(np.array(dataset))
+    q25, q75 = np.percentile(np.array(dataset), [25, 75])
     return q75 - q25
 
 

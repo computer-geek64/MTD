@@ -7,7 +7,7 @@ import Data as data
 
 
 def criteria(observation, dataset):
-    return data.median(dataset) - 1.5 * data.iqr(dataset) <= observation <= data.median(dataset) + 1.5 * data.iqr(dataset)
+    return data.median([dataset]) - 1.5 * data.iqr([dataset]) <= observation <= data.median([dataset]) + 1.5 * data.iqr([dataset])
 
 
 soda = data.SODA("data.delaware.gov", "2bb6-s69t")
@@ -18,4 +18,6 @@ results = [float(x["paramvalue"]) for x in results]
 print("Dataset length: " + str(len(results)))
 print(results)
 
-data.remove_outliers(results, criteria)
+dataset = data.remove_outliers([results], criteria)
+print(dataset)
+print(len(dataset))
