@@ -64,5 +64,5 @@ def sample_standard_deviation(data, vector_index):
     return statistics.stdev(np.array(data[vector_index]))
 
 
-def remove_outliers(self, data, elimination_criteria, vector_index=0):
-    return [observation for observation in np.array(data[vector_index]) if elimination_criteria(observation)]
+def remove_outliers(data, elimination_criteria, vector_index=0):
+    return [observation for observation in np.array(data[vector_index]) if elimination_criteria(observation, np.array(data[vector_index]))]
