@@ -3,6 +3,7 @@
 # November 13th, 2018
 
 import os
+import statistics
 import numpy as np
 from sodapy import Socrata
 
@@ -32,3 +33,36 @@ class SODA:
 
     def download(self, **kwargs) -> list:
         return self.client.get(self.dataset_identifier, **kwargs)
+
+
+def iqr(dataset):
+    q25, q75 = np.percentile(np.array(dataset))
+    return q75 - q25
+
+
+def mean(data, vector_index=0):
+    return statistics.mean(np.array(data[vector_index]))
+
+
+def median(data, vector_index=0):
+    return statistics.median(np.array(data[vector_index]))
+
+
+def population_variance(data, vector_index=0):
+    return statistics.pvariance(np.array(data[vector_index]))
+
+
+def sample_variance(data, vector_index=0):
+    return statistics.variance(np.array(data[vector_index]))
+
+
+def population_standard_deviation(data, vector_index=0):
+    return statistics.pstdev(np.array(data[vector_index]))
+
+
+def sample_standard_deviation(data, vector_index):
+    return statistics.stdev(np.array(data[vector_index]))
+
+
+def remove_outliers(self, data, elimination_criteria, vector_index=0):
+    return [observation for observation in np.array(data[vector_index]) if elimination_criteria(observation)]
