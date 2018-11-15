@@ -1,4 +1,4 @@
-# Contributing
+# Contribute
 *November 15th, 2018*
 
 ## How to Contribute
