@@ -35,34 +35,51 @@ class SODA:
         return self.client.get(self.dataset_identifier, **kwargs)
 
 
-def iqr(dataset):
-    q25, q75 = np.percentile(np.array(dataset), [25, 75])
+def iqr(data, vector_index=0):
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    q25 = np.percentile(np.array(data[vector_index]), 25)
+    q75 = np.percentile(np.array(data[vector_index]), 75)
     return q75 - q25
 
 
 def mean(data, vector_index=0):
-    return statistics.mean(np.array(data[vector_index]))
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    return statistics.mean(data[vector_index])
 
 
 def median(data, vector_index=0):
-    return statistics.median(np.array(data[vector_index]))
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    return statistics.median(data[vector_index])
 
 
 def population_variance(data, vector_index=0):
-    return statistics.pvariance(np.array(data[vector_index]))
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    return statistics.pvariance(data[vector_index])
 
 
 def sample_variance(data, vector_index=0):
-    return statistics.variance(np.array(data[vector_index]))
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    return statistics.variance(data[vector_index])
 
 
 def population_standard_deviation(data, vector_index=0):
-    return statistics.pstdev(np.array(data[vector_index]))
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    return statistics.pstdev(data[vector_index])
 
 
-def sample_standard_deviation(data, vector_index):
-    return statistics.stdev(np.array(data[vector_index]))
+def sample_standard_deviation(data, vector_index=0):
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    return statistics.stdev(data[vector_index])
 
 
 def remove_outliers(data, elimination_criteria, vector_index=0):
-    return [observation for observation in np.array(data[vector_index]) if elimination_criteria(observation, np.array(data[vector_index]))]
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    return [observation for observation in data[vector_index] if elimination_criteria(observation, data[vector_index])]
