@@ -7,7 +7,7 @@ import Data as data
 
 
 def criteria(observation, dataset):
-    return data.median([dataset]) - 1.5 * data.iqr([dataset]) <= observation <= data.median([dataset]) + 1.5 * data.iqr([dataset])
+    return data.median(dataset) - 1.5 * data.iqr(dataset) <= observation <= data.median(dataset) + 1.5 * data.iqr(dataset)
 
 
 soda = data.SODA("data.delaware.gov", "2bb6-s69t")
