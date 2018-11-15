@@ -1,4 +1,4 @@
-# Contributing
+# Contribute
 *November 15th, 2018*
 
 ## How to Contribute
@@ -47,4 +47,4 @@ when making modifications.
 This project follows [GitHub's Community Guidelines](https://help.github.com/articles/github-community-guidelines/).
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](/docs/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

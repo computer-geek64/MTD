@@ -69,7 +69,7 @@ Explain each function of the accessible virtual keyboard
     * [Pandas](https://pandas.pydata.org/) - *Efficient data structure and analysis tools*
 
 ## Contributing
-Please read the [contributing](/docs/CONTRIBUTING.md) file for details on my code of conduct and pull request policy.
+Please read the [CONTRIBUTE.md](/docs/CONTRIBUTE.md) file for details on my code of conduct and pull request policy.
 
 ## Versioning
 This project uses [git](https://git-scm.com/) version control.
@@ -80,7 +80,7 @@ This project uses [git](https://git-scm.com/) version control.
 See also the list of [contributors](/docs/CONTRIBUTORS.md) who participated in this project.
 
 ## License
-This project is licensed under the MIT License - see the [license](/docs/LICENSE) file for detaills.
+This project is licensed under the MIT License - see the [LICENSE](/docs/LICENSE) file for detaills.
 
 ## Acknowledgements
 * **Mr. Bogdziewicz** for giving me help with my MTD whenever I needed it
