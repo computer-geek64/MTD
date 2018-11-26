@@ -3,27 +3,29 @@
 # November 19th, 2018
 
 import tensorflow as tf
+import numpy as np
 
 
-def linear_regression(data):
-    variables = [tf.Variable(1.0, dtype=tf.float32)] * len(data)
-    training_data = tf.placeholder(dtype=tf.float32)
-    linear_model = tf.tensordot(training_data[:-1], variables, 0)
+k = 2
+data = [
+    [0, 3, 5, 15],
+    [1, 6, 4, 17],
+    [2, 9, 3, 19],
+    [3, 12, 2, 21],
+    [4, 15, 1, 23]
+]
 
-    squared_error = tf.square(tf.subtract(training_data[-1], linear_model))
-    mean_squared_error = tf.divide(tf.reduce_sum(squared_error), len(squared_error.shape))
+training_data = tf.placeholder(dtype=tf.float32)
+testing_data = tf.placeholder(dtype=tf.float32)
 
-    optimizer = tf.train.GradientDescentOptimizer(0.01)
-    train = optimizer.minimize(mean_squared_error)
+distances = tf.sqrt(tf.reduce_sum(tf.square(tf.subtract(training_data, testing_data)), axis=1))
 
-    init = tf.global_variables_initializer()
-    sess = tf.Session()
+init = tf.global_variables_initializer()
+sess = tf.Session()
 
-    sess.run(init)
-
-    for i in range(1000):
-        sess.run(train, feed_dict={training_data: data[:-1] + [1] * len(data[0]) + data[-1]})
-    return sess.run([mean_squared_error, variables], feed_dict={training_data: data[:-1] + [1] * len(data[0]) + data[-1]})
-
-
-print(linear_regression([[0, 1, 2, 3], [1, 2, 3, 4]]))
+sess.run(init)
+for observation in range(len(data)):
+    distance = sess.run(distances, feed_dict={training_data: data, testing_data: data[observation]})
+    print(distance)
+    lowest_k_distances = sess.run(tf.nn.top_k(tf.negative(distance), k + 1))[1][1:]
+    print(lowest_k_distances)
