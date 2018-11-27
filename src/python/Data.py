@@ -83,3 +83,9 @@ def remove_outliers(data, elimination_criteria, vector_index=0):
     if len(np.shape(data)) == 1:
         data = np.array([data])
     return [observation for observation in data[vector_index] if elimination_criteria(observation, data[vector_index])]
+
+
+def get_outliers(data, elimination_criteria, vector_index=0):
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    return [observation for observation in data[vector_index] if not elimination_criteria(observation, data[vector_index])]
