@@ -16,6 +16,7 @@ def statistical_outlier_detection(data, vector_index=0):
     iqr = q75 - q25
     threshold = iqr * 1.5
     median = Data.median(data[vector_index])
+
     outliers = []
     for observation in range(len(data[vector_index])):
         if median - threshold > data[vector_index][observation] or median + threshold < data[vector_index][observation]:
@@ -23,8 +24,18 @@ def statistical_outlier_detection(data, vector_index=0):
     return outliers
 
 
-def standard_deviation_outlier_detection(data, vector_index=0):
+# Detects outliers using the standard deviation of a sample
+def standard_deviation_outlier_detection(data, std=1, vector_index=0):
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    standard_deviation = Data.sample_standard_deviation(data[vector_index])
+    mean = Data.mean(data[vector_index])
 
+    outliers = []
+    for observation in range(len(data[vector_index])):
+        if mean - std * standard_deviation > data[vector_index][observation] or mean + std * standard_deviation < data[vector_index][observation]:
+            outliers.append(observation)
+    return outliers
 
 
 # Detects outliers based on k-Nearest Neighbor machine learning algorithm with Euclidean distance formula
