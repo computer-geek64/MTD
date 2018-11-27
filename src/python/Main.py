@@ -13,6 +13,14 @@ where_query = soda.format_where_query(["countycode=\"3\"", "NOT stt_datastatusco
 results = soda.download(where=where_query, order="date_time DESC", limit=1000)
 print("Dataset length: " + str(len(results)))
 print(results)
+
+date_time_list = []
+for observation in range(len(results)):
+    if results[observation]["date_time"] not in monitor_names:
+        date_time_list.append(results[observation]["date_time"])
+
+
+
 monitor_names = []
 for observation in range(len(results)):
     if results[observation]["mot_monitorname"] not in monitor_names:
