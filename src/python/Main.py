@@ -10,7 +10,7 @@ import OutlierDetection
 soda = Data.SODA("data.delaware.gov", "2bb6-s69t")
 print(soda.get_columns())
 where_query = soda.format_where_query(["countycode=\"3\"", "NOT stt_datastatuscodetext=\"Down\"", "NOT stt_datastatuscodetext=\"NoData\"", "NOT stt_datastatuscodetext=\"InVld\"", "sta_stationname=\"Martin Luther King\""])
-results = soda.download(where=where_query, order="date_time DESC", limit=120000)
+results = soda.download(where=where_query, order="date_time DESC", limit=100000)
 print("Dataset length: " + str(len(results)))
 
 data_dict = {}
@@ -20,6 +20,7 @@ for observation in range(len(results)):
     data_dict[results[observation]["date_time"]][results[observation]["mot_monitorname"]] = float(results[observation]["paramvalue"])
 default_length = max(map(len, data_dict.values()))
 original_length = len(data_dict)
+print("Default length: " + str(default_length))
 
 data = []
 for date_time in sorted(data_dict.keys()):
