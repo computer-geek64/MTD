@@ -18,6 +18,7 @@ for observation in range(len(results)):
     if results[observation]["date_time"] not in data_dict.keys():
         data_dict[results[observation]["date_time"]] = {}
     data_dict[results[observation]["date_time"]][results[observation]["mot_monitorname"]] = float(results[observation]["paramvalue"])
+parameters = ["8 HR Ozone", "AQS Temp Deg C", "BC 880", "CO Trace Level", "NO2", "NOX", "NOY", "Ozone", "PM 2.5 TAPI", "PM2.5 5030i IN", "RH", "SO2 Trace Level", "SO2-Max5min", "Temp", "Wind Dir V", "Wind Speed V"]
 default_length = max(map(len, data_dict.values()))
 original_length = len(data_dict)
 print("Default length: " + str(default_length))
@@ -25,12 +26,15 @@ print("Default length: " + str(default_length))
 data = []
 for date_time in sorted(data_dict.keys()):
     data.append([])
-    for monitor_name in sorted(data_dict[date_time].keys()):
-        data[-1].append(data_dict[date_time][monitor_name])
+    if sorted(list(data_dict[date_time].keys())) == parameters:
+        for monitor_name in sorted(data_dict[date_time].keys()):
+            data[-1].append(data_dict[date_time][monitor_name])
+    elif len(data_dict[date_time].keys())
     if len(data_dict[date_time]) != default_length:
         data.pop(-1)
         data_dict.pop(date_time)
 
+print(sorted(list(data_dict[list(data_dict.keys())[33]].keys())))
 if len(max(data)) != len(min(data)):
     print("Length of data matrix is inconsistent")
     exit(0)
