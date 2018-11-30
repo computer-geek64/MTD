@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # OutlierDetection.py
 # Ashish D'Souza
 # November 26th, 2018

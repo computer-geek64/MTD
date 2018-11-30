@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # Data.py
 # Ashish D'Souza
 # November 30th, 2018
