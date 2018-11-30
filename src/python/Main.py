@@ -1,8 +1,7 @@
 # Main.py
 # Ashish D'Souza
-# November 15th, 2018
+# November 30th, 2018
 
-import os
 import Data
 import OutlierDetection
 
