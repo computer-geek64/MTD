@@ -25,21 +25,7 @@ def statistical_outlier_detection(data, vector_index=0):
     return outliers
 
 
-# Detects outliers using the standard deviation of a sample
-def standard_deviation_outlier_detection(data, std=1, vector_index=0):
-    if len(np.shape(data)) == 1:
-        data = np.array([data])
-    standard_deviation = Data.sample_standard_deviation(data[vector_index])
-    mean = Data.mean(data[vector_index])
-
-    outliers = []
-    for observation in range(len(data[vector_index])):
-        if mean - std * standard_deviation > data[vector_index][observation] or mean + std * standard_deviation < data[vector_index][observation]:
-            outliers.append(observation)
-    return outliers
-
-
-# Detects outliers based on k-Nearest Neighbor machine learning algorithm with Euclidean distance formula
+# Detects outliers based on k-NN ML algorithm with Euclidean distance formula
 def knn_outlier_detection(data, k=3):
     training_data = tf.constant(data, dtype=tf.float32)  # Entire training dataset
     test_point = tf.placeholder(dtype=tf.float32)  # Current observation in training dataset
@@ -57,3 +43,17 @@ def knn_outlier_detection(data, k=3):
 
     mean_knn_distances = [sess.run(mean_knn_distance, feed_dict={test_point: data[observation]}) for observation in range(len(data))]  # List of average k-NN distances
     return statistical_outlier_detection(mean_knn_distances)
+
+
+# Detects outliers using the standard deviation of a sample
+def standard_deviation_outlier_detection(data, std=1, vector_index=0):
+    if len(np.shape(data)) == 1:
+        data = np.array([data])
+    standard_deviation = Data.sample_standard_deviation(data[vector_index])
+    mean = Data.mean(data[vector_index])
+
+    outliers = []
+    for observation in range(len(data[vector_index])):
+        if mean - std * standard_deviation > data[vector_index][observation] or mean + std * standard_deviation < data[vector_index][observation]:
+            outliers.append(observation)
+    return outliers
