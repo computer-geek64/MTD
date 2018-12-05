@@ -11,20 +11,21 @@ with tf.name_scope("input_layer"):
 y_training_data = tf.placeholder(dtype=tf.float32, shape=[None, 1], name="y_training_data")
 
 with tf.name_scope("hidden_layer"):
-    hidden_layer = tf.layers.dense(x_training_data, 1, activation=tf.nn.leaky_relu)
+    hidden_layer = tf.layers.dense(x_training_data, 1, activation=tf.nn.leaky_relu, name="hidden_layer")
 
 with tf.name_scope("output_layer"):
     output = tf.layers.dense(hidden_layer, 1, name="output_layer")
 
 with tf.name_scope("loss_function"):
     loss = tf.divide(tf.reduce_sum(tf.square(tf.subtract(y_training_data, output))), tf.constant(1, dtype=tf.float32), name="loss")
+    print(tf.get_default_graph().get_tensor_by_name("loss_function/loss:0"))
+    length = tf.shape(y_training_data)[0]
 
 loss_summary = tf.summary.scalar(name="loss_summary", tensor=loss)
 
 with tf.name_scope("training"):
     optimizer = tf.train.ProximalAdagradOptimizer(learning_rate=0.1, name="optimizer")
     train = optimizer.minimize(loss, name="train")
-learning_rate_summary = tf.summary.scalar(name="learning_rate_summary", tensor=optimizer._learning_rate_tensor)
 
 summaries = tf.summary.merge_all()
 writer = tf.summary.FileWriter("./graphs", tf.get_default_graph())
@@ -34,6 +35,9 @@ sess = tf.Session()
 
 sess.run(init)
 
+print(sess.run(length, feed_dict={y_training_data: [[3], [4], [5], [6], [7]]}))
+print(tf.get_default_graph().get_tensor_by_name("hidden_layer:0"))
+exit(0)
 for i in range(10000):
     sess.run(train, feed_dict={x_training_data: [[0], [1], [2], [3], [4]], y_training_data: [[3], [4], [5], [6], [7]]})
     writer.add_summary(sess.run(summaries, feed_dict={x_training_data: [[0], [1], [2], [3], [4]], y_training_data: [[3], [4], [5], [6], [7]]}), i)

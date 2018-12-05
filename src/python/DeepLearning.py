@@ -8,21 +8,26 @@ import tensorflow as tf
 
 class DeepNeuralNetwork:
     def __init__(self, layers, activation_functions):
-
         if len(activation_functions) < len(layers):
             activation_functions.insert(0, None)
-        with tf.name_scope("input_layer"):
-            self.x_training_data = tf.placeholder(dtype=tf.float32, shape=[None, layers[0]], name="x_training_data")
         self.y_training_data = tf.placeholder(dtype=tf.float32, shape=[None, layers[0]], name="y_training_data")
+        with tf.name_scope("deep_neural_network"):
+            with tf.name_scope("input_layer"):
+                self.x_training_data = tf.placeholder(dtype=tf.float32, shape=[None, layers[0]], name="x_training_data")
 
-        self.hidden_layers = []
-        with tf.name_scope("hidden_layer"):
-            self.hidden_layers.append(tf.layers.dense(x_training_data, layers[1], activation=activation_functions[1], name="hidden_layer"))
-        for i in range(2, layers - 1):
-            with tf.name_scope("hidden_layer" + str(i)):
-                self.hidden_layers.append(tf.layers.dense(self.hidden_layers[-1], layers[i], activation=activation_functions[i] + str(i)))
+            self.hidden_layers = []
+            with tf.name_scope("hidden_layer"):
+                self.hidden_layers.append(tf.layers.dense(x_training_data, layers[1], activation=activation_functions[1], name="hidden_layer"))
+            for i in range(2, layers - 1):
+                with tf.name_scope("hidden_layer" + str(i)):
+                    self.hidden_layers.append(tf.layers.dense(self.hidden_layers[-1], layers[i], activation=activation_functions[i], name="hidden_layer" + str(i)))
 
-        self.output_layer = tf.layers.dense(self.hidden_layers[-1], layers[-1], name="output_layer")
+            with tf.name_scope("output_layer"):
+                self.output_layer = tf.layers.dense(self.hidden_layers[-1], layers[-1], name="output_layer")
+
+        with tf.name_scope("loss"):
+            loss = tf.divide(tf.reduce_sum(tf.square(tf.subtract(y_training_data, self.output_layer))), tf.shape(y_training_data)[0])
+            loss_summary = tf.summary.scalar(name="loss_summary", tensor=loss)
 
 
 x_training_data = tf.placeholder(dtype=tf.float32, shape=[None, 1], name="x_training_data")
