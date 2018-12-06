@@ -4,6 +4,20 @@
 # December 5th, 2018
 
 import tensorflow as tf
+import numpy as np
+
+
+array = [
+    [1, 2, 3],
+    [2 ,3, 4],
+    [3, 4, 5],
+    [4, 5, 6]
+]
+print(array[0])
+print(array[0][0])
+#print(array[0, 0])
+print(np.array(array)[:,0])
+exit(0)
 
 
 with tf.name_scope("input_layer"):

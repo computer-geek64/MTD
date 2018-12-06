@@ -8,11 +8,11 @@ from datetime import datetime
 
 
 class DeepNeuralNetwork:
-    def __init__(self, layers, activation_functions, tensorflow_optimizer=tf.train.ProximalAdagradOptimizer, learning_rate=0.01, logdir="./tensorboard/dnn/" + str(int(datetime.now().timestamp()))):
+    def __init__(self, layers, activation_functions, tensorflow_optimizer=tf.train.ProximalAdagradOptimizer, learning_rate=0.1, logdir="./tensorboard/dnn/" + str(int(datetime.now().timestamp()))):
         self.reset()
         if len(activation_functions) < len(layers):
             activation_functions.insert(0, None)
-        self.y_training_data = tf.placeholder(dtype=tf.float32, shape=[None, layers[0]], name="y_training_data")
+        self.y_training_data = tf.placeholder(dtype=tf.float32, shape=[None, 1], name="y_training_data")
         with tf.name_scope("deep_neural_network"):
             with tf.name_scope("input_layer"):
                 self.x_training_data = tf.placeholder(dtype=tf.float32, shape=[None, layers[0]], name="x_training_data")
@@ -20,16 +20,15 @@ class DeepNeuralNetwork:
             self.hidden_layers = []
             with tf.name_scope("hidden_layer"):
                 self.hidden_layers.append(tf.layers.dense(self.x_training_data, layers[1], activation=activation_functions[1], name="hidden_layer"))
-            for i in range(2, layers - 1):
+            for i in range(2, len(layers) - 1):
                 with tf.name_scope("hidden_layer" + str(i)):
                     self.hidden_layers.append(tf.layers.dense(self.hidden_layers[-1], layers[i], activation=activation_functions[i], name="hidden_layer" + str(i)))
 
             with tf.name_scope("output_layer"):
-                tf.layers.dense()
                 self.output_layer = tf.layers.dense(self.hidden_layers[-1], layers[-1], activation=activation_functions[-1], name="output_layer")
 
         with tf.name_scope("loss"):
-            self.loss = tf.divide(tf.reduce_sum(tf.square(tf.subtract(self.y_training_data, self.output_layer))), tf.shape(self.y_training_data)[0])
+            self.loss = tf.divide(tf.reduce_sum(tf.square(tf.subtract(self.y_training_data, self.output_layer))), tf.cast(tf.shape(self.y_training_data)[0], dtype=tf.float32))
             tf.summary.scalar(name="loss_summary", tensor=self.loss)
 
         with tf.name_scope("training"):
@@ -58,7 +57,7 @@ class DeepNeuralNetwork:
     def predict(self, x_data):
         return self.sess.run(self.output_layer, feed_dict={self.x_training_data: x_data})
 
-    def save(self, filepath_prefix="./models/model"):
+    def save(self, filepath_prefix="./models/" + str(int(datetime.now().timestamp())) + "/model"):
         saver = tf.train.Saver()
         return saver.save(self.sess, filepath_prefix)
 

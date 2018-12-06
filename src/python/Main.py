@@ -5,9 +5,12 @@
 
 import Data
 import OutlierDetection
+import DeepLearning
+import tensorflow as tf
+import numpy as np
 
 
-parameters = ["Temp", "NO2", "NOX", "NOY", "Ozone", "RH", "Wind Speed V"]
+parameters = ["Temp", "NO2", "NOX", "NOY", "RH", "Wind Speed V", "Ozone"]
 
 soda = Data.SODA("data.delaware.gov", "2bb6-s69t")
 print(soda.get_columns())
@@ -47,3 +50,13 @@ print("All parameters: " + str(all_parameters))
 print("Dataset size: " + str(len(results)) + " --> " + str(original_length) + " --> " + str(len(data)))
 print("k: " + str(k))
 print("Outliers: " + str(len(outliers)) + ", " + str(round(len(outliers) / len(data) * 100, 2)) + "%")
+
+corrected_data = [data[i] for i in range(len(data)) if i not in outliers]
+
+y_data = np.array(corrected_data)[:, -1:]
+x_data = np.array(corrected_data)[:, :-1]
+
+dnn = DeepLearning.DeepNeuralNetwork(layers=[len(x_data[0]), int((len(x_data[0]) + 1) / 2) + 1, 1], activation_functions=[None, tf.nn.relu, None], tensorflow_optimizer=tf.train.ProximalAdagradOptimizer, learning_rate=0.01)
+loss = dnn.train(x_data, y_data, 100000)
+print(loss)
+print(Data.mean(y_data, vector_index=0))
