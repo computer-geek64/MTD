@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 # OutlierDetection.py
 # Ashish D'Souza
-# November 26th, 2018
+# December 5th, 2018
 
 import numpy as np
 import tensorflow as tf
+from datetime import datetime
 import Data
 
 
@@ -27,21 +28,34 @@ def statistical_outlier_detection(data, vector_index=0):
 
 # Detects outliers based on k-NN ML algorithm with Euclidean distance formula
 def knn_outlier_detection(data, k=3):
-    training_data = tf.constant(data, dtype=tf.float32)  # Entire training dataset
-    test_point = tf.placeholder(dtype=tf.float32)  # Current observation in training dataset
+    training_data = tf.constant(data, dtype=tf.float32, name="training_data")  # Entire training dataset
+    test_point = tf.placeholder(dtype=tf.float32, name="test_point")  # Current observation in training dataset
 
-    squared_difference = tf.square(tf.subtract(training_data, test_point))
-    euclidean_distance = tf.sqrt(tf.reduce_sum(squared_difference, axis=1))  # Euclidean distance
+    with tf.name_scope("euclidean_distance"):
+        squared_difference = tf.square(tf.subtract(training_data, test_point))
+        euclidean_distance = tf.sqrt(tf.reduce_sum(squared_difference, axis=1))  # Euclidean distance
+        mean_euclidean_distance = tf.reduce_mean(euclidean_distance, name="mean_euclidean_distance")
+    tf.summary.scalar(name="mean_euclidean_distance", tensor=mean_euclidean_distance)
 
-    knn_distances = tf.negative(tf.nn.top_k(tf.negative(euclidean_distance), k + 1).values)[1:]
-    mean_knn_distance = tf.reduce_mean(knn_distances)  # Average of the k smallest distances
+    with tf.name_scope("knn_distance"):
+        knn_distances = tf.negative(tf.nn.top_k(tf.negative(euclidean_distance), k + 1).values)[1:]
+        mean_knn_distance = tf.reduce_mean(knn_distances)  # Average of the k smallest distances
+    tf.summary.scalar(name="mean_knn_distance", tensor=mean_knn_distance)
+
+    summaries = tf.summary.merge_all()
+    writer = tf.summary.FileWriter("./tensorboard/knn_outlier_detector/" + str(int(datetime.now().timestamp())), tf.get_default_graph())
 
     init = tf.global_variables_initializer()
     sess = tf.Session()
 
     sess.run(init)
 
-    mean_knn_distances = [sess.run(mean_knn_distance, feed_dict={test_point: data[observation]}) for observation in range(len(data))]  # List of average k-NN distances
+    mean_knn_distances = []
+    for observation in range(len(data)):
+        mean_knn_distances.append(sess.run(mean_knn_distance, feed_dict={test_point: data[observation]}))
+        writer.add_summary(sess.run(summaries, feed_dict={test_point: data[observation]}), observation)
+
+    # mean_knn_distances = [sess.run(mean_knn_distance, feed_dict={test_point: data[observation]}) for observation in range(len(data))]  # List of average k-NN distances
     return statistical_outlier_detection(mean_knn_distances)
 
 

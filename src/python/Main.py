@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Main.py
 # Ashish D'Souza
-# November 30th, 2018
+# December 5th, 2018
 
 import Data
 import OutlierDetection
@@ -39,7 +39,7 @@ if len(max(data)) != len(min(data)):
     print("Length of data matrix is inconsistent")
     exit(0)
 
-# k = int(round(len(data) * 0.0001))
+# k = int(round(len(data) * 0.01))
 k = 3
 outliers = OutlierDetection.knn_outlier_detection(data, k=k)
 

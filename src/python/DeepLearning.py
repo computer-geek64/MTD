@@ -1,13 +1,15 @@
 #!/usr/bin/python3
 # DeepLearning.py
 # Ashish D'Souza
-# November 30th, 2018
+# December 5th, 2018
 
 import tensorflow as tf
+from datetime import datetime
 
 
 class DeepNeuralNetwork:
-    def __init__(self, layers, activation_functions):
+    def __init__(self, layers, activation_functions, tensorflow_optimizer=tf.train.ProximalAdagradOptimizer, learning_rate=0.01, logdir="./tensorboard/dnn/" + str(int(datetime.now().timestamp()))):
+        self.reset()
         if len(activation_functions) < len(layers):
             activation_functions.insert(0, None)
         self.y_training_data = tf.placeholder(dtype=tf.float32, shape=[None, layers[0]], name="y_training_data")
@@ -17,32 +19,53 @@ class DeepNeuralNetwork:
 
             self.hidden_layers = []
             with tf.name_scope("hidden_layer"):
-                self.hidden_layers.append(tf.layers.dense(x_training_data, layers[1], activation=activation_functions[1], name="hidden_layer"))
+                self.hidden_layers.append(tf.layers.dense(self.x_training_data, layers[1], activation=activation_functions[1], name="hidden_layer"))
             for i in range(2, layers - 1):
                 with tf.name_scope("hidden_layer" + str(i)):
                     self.hidden_layers.append(tf.layers.dense(self.hidden_layers[-1], layers[i], activation=activation_functions[i], name="hidden_layer" + str(i)))
 
             with tf.name_scope("output_layer"):
-                self.output_layer = tf.layers.dense(self.hidden_layers[-1], layers[-1], name="output_layer")
+                tf.layers.dense()
+                self.output_layer = tf.layers.dense(self.hidden_layers[-1], layers[-1], activation=activation_functions[-1], name="output_layer")
 
         with tf.name_scope("loss"):
-            loss = tf.divide(tf.reduce_sum(tf.square(tf.subtract(y_training_data, self.output_layer))), tf.shape(y_training_data)[0])
-            loss_summary = tf.summary.scalar(name="loss_summary", tensor=loss)
+            self.loss = tf.divide(tf.reduce_sum(tf.square(tf.subtract(self.y_training_data, self.output_layer))), tf.shape(self.y_training_data)[0])
+            tf.summary.scalar(name="loss_summary", tensor=self.loss)
 
+        with tf.name_scope("training"):
+            optimizer = tensorflow_optimizer(learning_rate=learning_rate, name="optimizer")
+            self.training = optimizer.minimize(self.loss)
 
-x_training_data = tf.placeholder(dtype=tf.float32, shape=[None, 1], name="x_training_data")
-y_training_data = tf.placeholder(dtype=tf.float32, shape=[None, 1], name="y_training_data")
+        self.summaries = tf.summary.merge_all()
+        self.writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
 
-init = tf.global_variables_initializer()
-sess = tf.Session()
-sess.run(init)
-print(sess.run(tf.reduce_prod(tf.shape(x_training_data)), feed_dict={x_training_data: [[0], [1], [2]]}))
-print(x_training_data)
-print(y_training_data)
-print(sess.run(tf.get_default_graph().get_tensor_by_name("x_training_data"), feed_dict={x_training_data: [[0], [1], [2]]}))
-exit(0)
+        init = tf.global_variables_initializer()
+        self.sess = tf.Session()
 
-hidden_layer_weights = [tf.Variable(0, dtype=tf.float32) for i in range(1)]
-hidden_layer_bias = [tf.Variable(0, dtype=tf.float32) for i in range(1)]
+        self.sess.run(init)
 
-hidden_layer = tf.nn.relu(tf.add(tf.matmul(x_training_data, hidden_layer_weights), hidden_layer_bias))
+    def train(self, x_data, y_data, training_iterations):
+        for training_iteration in range(training_iterations):
+            self.sess.run(self.training, feed_dict={self.x_training_data: x_data, self.y_training_data: y_data})
+            self.writer.add_summary(self.sess.run(self.summaries, feed_dict={self.x_training_data: x_data, self.y_training_data: y_data}), training_iteration)
+
+        return self.sess.run(self.loss, feed_dict={self.x_training_data: x_data, self.y_training_data: y_data})
+
+    def test(self, x_data, y_data):
+        predicted = self.sess.run(self.output_layer, feed_dict={self.x_training_data: x_data})
+        return tf.divide(tf.reduce_sum(tf.square(tf.subtract(tf.constant(y_data, dtype=tf.float32), tf.constant(predicted, dtype=tf.float32)))))
+
+    def predict(self, x_data):
+        return self.sess.run(self.output_layer, feed_dict={self.x_training_data: x_data})
+
+    def save(self, filepath_prefix="./models/model"):
+        saver = tf.train.Saver()
+        return saver.save(self.sess, filepath_prefix)
+
+    def restore(self, filepath_prefix="./models/model"):
+        saver = tf.train.Saver()
+        saver.restore(self.sess, filepath_prefix)
+        return filepath_prefix
+
+    def reset(self):
+        tf.reset_default_graph()

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # Sandbox.py
 # Ashish D'Souza
-# November 30th, 2018
+# December 5th, 2018
 
 import tensorflow as tf
 
@@ -19,7 +19,6 @@ with tf.name_scope("output_layer"):
 with tf.name_scope("loss_function"):
     loss = tf.divide(tf.reduce_sum(tf.square(tf.subtract(y_training_data, output))), tf.constant(1, dtype=tf.float32), name="loss")
     print(tf.get_default_graph().get_tensor_by_name("loss_function/loss:0"))
-    length = tf.shape(y_training_data)[0]
 
 loss_summary = tf.summary.scalar(name="loss_summary", tensor=loss)
 
@@ -35,7 +34,6 @@ sess = tf.Session()
 
 sess.run(init)
 
-print(sess.run(length, feed_dict={y_training_data: [[3], [4], [5], [6], [7]]}))
 print(tf.get_default_graph().get_tensor_by_name("hidden_layer:0"))
 exit(0)
 for i in range(10000):
