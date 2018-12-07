@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 class DeepNeuralNetwork:
-    def __init__(self, layers, activation_functions, tensorflow_optimizer=tf.train.ProximalAdagradOptimizer, learning_rate=0.1, logdir="./tensorboard/dnn/" + str(int(datetime.now().timestamp()))):
+    def __init__(self, layers, activation_functions, tensorflow_optimizer=tf.train.ProximalAdagradOptimizer, learning_rate=0.1, logdir="./tensorboard/dnn/"):
         self.reset()
         if len(activation_functions) < len(layers):
             activation_functions.insert(0, None)
@@ -28,7 +28,7 @@ class DeepNeuralNetwork:
                 self.output_layer = tf.layers.dense(self.hidden_layers[-1], layers[-1], activation=activation_functions[-1], name="output_layer")
 
         with tf.name_scope("loss"):
-            self.loss = tf.divide(tf.reduce_sum(tf.square(tf.subtract(self.y_training_data, self.output_layer))), tf.cast(tf.shape(self.y_training_data)[0], dtype=tf.float32))
+            self.loss = tf.divide(tf.reduce_sum(tf.abs(tf.subtract(self.y_training_data, self.output_layer))), tf.cast(tf.shape(self.y_training_data)[0], dtype=tf.float32))
             tf.summary.scalar(name="loss_summary", tensor=self.loss)
 
         with tf.name_scope("training"):

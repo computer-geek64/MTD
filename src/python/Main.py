@@ -8,9 +8,10 @@ import OutlierDetection
 import DeepLearning
 import tensorflow as tf
 import numpy as np
+from datetime import datetime
 
 
-parameters = ["Temp", "NO2", "NOX", "NOY", "RH", "Wind Speed V", "Ozone"]
+parameters = ["Temp", "NO2", "NOX", "NOY", "RH", "Wind Speed V", "CO Trace Level", "PM 2.5 TAPI", "SO2 Trace Level", "Wind Dir V", "Ozone"]
 
 soda = Data.SODA("data.delaware.gov", "2bb6-s69t")
 print(soda.get_columns())
@@ -56,7 +57,9 @@ corrected_data = [data[i] for i in range(len(data)) if i not in outliers]
 y_data = np.array(corrected_data)[:, -1:]
 x_data = np.array(corrected_data)[:, :-1]
 
-dnn = DeepLearning.DeepNeuralNetwork(layers=[len(x_data[0]), int((len(x_data[0]) + 1) / 2) + 1, 1], activation_functions=[None, tf.nn.relu, None], tensorflow_optimizer=tf.train.ProximalAdagradOptimizer, learning_rate=0.01)
+dnn = DeepLearning.DeepNeuralNetwork([len(x_data[0]), int((len(x_data[0]) + 1) / 2) + 1, 1], [None, tf.nn.relu, None], tf.train.AdagradOptimizer, learning_rate=0.1, logdir="./tensorboard/dnn/" + str(int(datetime.now().timestamp())))
 loss = dnn.train(x_data, y_data, 100000)
-print(loss)
-print(Data.mean(y_data, vector_index=0))
+average = Data.mean(y_data, vector_index=0)
+print("Loss: " + str(loss))
+print("Average: " + str(average))
+print("Percentage: " + str(round(loss / average * 100, 2)) + "%")
