@@ -18,7 +18,7 @@ soda = Data.SODA("data.delaware.gov", "2bb6-s69t")
 print(soda.get_columns())
 where_query = soda.format_where_query(["countycode=\"3\"", "NOT stt_datastatuscodetext=\"Down\"", "NOT stt_datastatuscodetext=\"NoData\"", "NOT stt_datastatuscodetext=\"InVld\"", "sta_stationname=\"Martin Luther King\"", "date_time>\"2018\"", "date_time<\"2018-12-08\""])
 results = soda.download(where=where_query, order="date_time ASC", limit=1000000)
-
+print(len(results))
 data_dict = {}
 for observation in range(len(results)):
     if results[observation]["date_time"] not in data_dict.keys():
