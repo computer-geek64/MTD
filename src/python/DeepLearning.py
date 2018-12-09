@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 class DeepNeuralNetwork:
-    def __init__(self, layers, activation_functions, tensorflow_optimizer=tf.train.ProximalAdagradOptimizer, learning_rate=0.1, logdir="./tensorboard/dnn/"):
+    def __init__(self, layers, activation_functions, tensorflow_optimizer=tf.train.AdagradOptimizer, learning_rate=0.1, logdir="./tensorboard/dnn/"):
         self.reset()
         if len(activation_functions) < len(layers):
             activation_functions.insert(0, None)
@@ -51,13 +51,13 @@ class DeepNeuralNetwork:
         return self.sess.run(self.loss, feed_dict={self.x_training_data: x_data, self.y_training_data: y_data})
 
     def test(self, x_data, y_data):
-        predicted = self.sess.run(self.output_layer, feed_dict={self.x_training_data: x_data})
-        return tf.divide(tf.reduce_sum(tf.square(tf.subtract(tf.constant(y_data, dtype=tf.float32), tf.constant(predicted, dtype=tf.float32)))))
+        test_loss = tf.divide(tf.reduce_sum(tf.abs(tf.subtract(tf.constant(y_data, dtype=tf.float32), self.output_layer))), tf.constant(len(y_data), dtype=tf.float32))
+        return self.sess.run(test_loss, feed_dict={self.x_training_data: x_data})
 
     def predict(self, x_data):
         return self.sess.run(self.output_layer, feed_dict={self.x_training_data: x_data})
 
-    def save(self, filepath_prefix="./models/" + str(int(datetime.now().timestamp())) + "/model"):
+    def save(self, filepath_prefix="./models/model"):
         saver = tf.train.Saver()
         return saver.save(self.sess, filepath_prefix)
 
