@@ -54,7 +54,7 @@ print("All parameters: " + str(all_parameters))
 print("Dataset size: " + str(len(results)) + " --> " + str(original_length) + " --> " + str(len(data)))
 print("k: " + str(k))
 print("Outliers: " + str(len(outliers)) + ", " + str(round(len(outliers) / len(data) * 100, 2)) + "%")
-
+exit(0)
 corrected_data = [data[i] for i in range(len(data)) if i not in outliers]
 
 y_data = np.array(corrected_data)[:, -1:]
