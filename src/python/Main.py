@@ -16,7 +16,7 @@ parameters = ["Temp", "NO2", "NOX", "NOY", "RH", "Wind Speed V", "SO2 Trace Leve
 
 soda = Data.SODA("data.delaware.gov", "2bb6-s69t")
 print(soda.get_columns())
-where_query = soda.format_where_query(["countycode=\"3\"", "NOT stt_datastatuscodetext=\"Down\"", "NOT stt_datastatuscodetext=\"NoData\"", "NOT stt_datastatuscodetext=\"InVld\"", "sta_stationname=\"Martin Luther King\"", "date_time>\"2017\"", "date_time<\"2018\""])
+where_query = soda.format_where_query(["countycode=\"3\"", "NOT stt_datastatuscodetext=\"Down\"", "NOT stt_datastatuscodetext=\"NoData\"", "NOT stt_datastatuscodetext=\"InVld\"", "sta_stationname=\"Martin Luther King\"", "date_time<\"2018-06-22\"", "date_time>\"2017-09-21\""])
 results = soda.download(where=where_query, order="date_time ASC", limit=1000000)
 print(len(results))
 data_dict = {}
@@ -36,14 +36,16 @@ for date_time in sorted(data_dict.keys()):
     if len([parameters[i] for i in range(len(parameters)) if parameters[i] in list(data_dict[date_time].keys())]) == len(parameters):
         data.append([data_dict[date_time][monitor_name] for monitor_name in parameters])
         date = datetime.strptime(date_time.split(".")[0], "%Y-%m-%dT%H:%M:%S")
-        data[-1].insert(-2, date.hour)
-        data[-1].insert(-2, date.month)
+        data[-1].insert(-1, date.hour)
+        data[-1].insert(-1, date.month)
     else:
         data_dict.pop(date_time)
 
 if len(max(data)) != len(min(data)):
     print("Length of data matrix is inconsistent")
     exit(0)
+
+print("Average: " + str(Data.mean(np.array(data)[:, -1])))
 
 # k = int(round(len(data) * 0.01))
 k = 3
@@ -59,6 +61,8 @@ corrected_data = [data[i] for i in range(len(data)) if i not in outliers]
 
 y_data = np.array(corrected_data)[:, -1:]
 x_data = np.array(corrected_data)[:, :-1]
+
+print("Average: " + str(Data.mean(np.array(y_data)[:, 0])))
 
 
 #layers = [9, 6, 1]
@@ -79,8 +83,8 @@ x_data = np.array(corrected_data)[:, :-1]
 
 optimal_dnn = float("inf")
 for i in range(3):
-    layers = [len(x_data[0]), 6, 4, 1]
-    activation_functions = [None, tf.nn.leaky_relu, tf.nn.leaky_relu, None]
+    layers = [len(x_data[0]), 6, 1]
+    activation_functions = [None, tf.nn.leaky_relu, None]
     optimizer = tf.train.AdagradOptimizer
     learning_rate = 0.1
     iterations = 100000
@@ -94,7 +98,7 @@ for i in range(3):
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         dnn.save(os.path.join(save_path, "model"))
-    average = Data.mean(y_data, vector_index=0)
+    average = Data.mean(np.array(y_data)[:, 0])
     print("Loss: " + str(loss))
     print("Average: " + str(average))
     print("Percentage: " + str(round(loss / average * 100, 2)) + "%")
