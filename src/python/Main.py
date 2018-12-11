@@ -16,7 +16,7 @@ parameters = ["Temp", "NO2", "NOX", "NOY", "RH", "Wind Speed V", "SO2 Trace Leve
 
 soda = Data.SODA("data.delaware.gov", "2bb6-s69t")
 print(soda.get_columns())
-where_query = soda.format_where_query(["countycode=\"3\"", "NOT stt_datastatuscodetext=\"Down\"", "NOT stt_datastatuscodetext=\"NoData\"", "NOT stt_datastatuscodetext=\"InVld\"", "sta_stationname=\"Martin Luther King\"", "date_time<\"2018-06-22\"", "date_time>\"2017-09-21\""])
+where_query = soda.format_where_query(["countycode=\"3\"", "NOT stt_datastatuscodetext=\"Down\"", "NOT stt_datastatuscodetext=\"NoData\"", "NOT stt_datastatuscodetext=\"InVld\"", "sta_stationname=\"Martin Luther King\"", "date_time<\"2019-01-01\"", "date_time>\"2017-12-31\""])
 results = soda.download(where=where_query, order="date_time ASC", limit=1000000)
 print(len(results))
 data_dict = {}
@@ -62,24 +62,23 @@ corrected_data = [data[i] for i in range(len(data)) if i not in outliers]
 y_data = np.array(corrected_data)[:, -1:]
 x_data = np.array(corrected_data)[:, :-1]
 
-print("Average: " + str(Data.mean(np.array(y_data)[:, 0])))
 
-
-#layers = [9, 6, 1]
-#activation_functions = [None, tf.nn.leaky_relu, None]
-#optimizer = tf.train.AdagradOptimizer
-#learning_rate = 0.1
-#iterations = 100000
-#dnn_logdir = "./tensorboard/dnn/" + str(int(datetime.now().timestamp()))
-#dnn = DeepLearning.DeepNeuralNetwork(layers, activation_functions, optimizer, learning_rate, dnn_logdir)
-#dnn.restore("./models/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations) + "/model")
-#print(dnn.predict(x_data[:1]))
-#print(y_data[:1])
-#average = Data.mean(y_data, vector_index=0)
-#loss = dnn.test(x_data, y_data)
-#print("Average: " + str(average))
-#print("Percentage: " + str(round(loss / average * 100, 2)) + "%")
-#exit(0)
+layers = [9, 7, 5, 3, 1]
+activation_functions = [None, tf.nn.leaky_relu, tf.nn.leaky_relu, tf.nn.leaky_relu, None]
+optimizer = tf.train.AdagradOptimizer
+learning_rate = 0.1
+iterations = 100000
+dnn_logdir = "./tensorboard/dnn/" + str(int(datetime.now().timestamp()))
+dnn = DeepLearning.DeepNeuralNetwork(layers, activation_functions, optimizer, learning_rate, dnn_logdir)
+dnn.restore("./models/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations) + "/model")
+print(dnn.predict(x_data[:1]))
+print(y_data[:1])
+average = Data.mean(y_data, vector_index=0)
+loss = dnn.test(x_data, y_data)
+print("Average: " + str(average))
+print("Percentage: " + str(round(loss / average * 100, 2)) + "%")
+print("Loss: " + str(loss))
+exit(0)
 
 optimal_dnn = float("inf")
 for i in range(3):
