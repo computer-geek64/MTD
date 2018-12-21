@@ -1,10 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- *
- * @author root
+/**
+ * EvaluateOutput.java
+ * Ashish D'Souza
+ * @computer-geek64
+ * December 20th, 2018
  */
+
 public class EvaluateOutput extends javax.swing.JFrame {
 
     /**
@@ -24,14 +24,26 @@ public class EvaluateOutput extends javax.swing.JFrame {
     private void initComponents() {
 
         informationPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         authorLabel = new javax.swing.JLabel();
         container = new javax.swing.JPanel();
+        dateLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        percentageLabel = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Deep Learning for Tropospheric Ozone Prediction");
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("Deep Learning for Tropospheric Ozone Prediction");
 
         authorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         authorLabel.setText("Ashish D'Souza, Engineering Design Technology");
@@ -40,27 +52,54 @@ public class EvaluateOutput extends javax.swing.JFrame {
         informationPanel.setLayout(informationPanelLayout);
         informationPanelLayout.setHorizontalGroup(
             informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
             .addComponent(authorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         informationPanelLayout.setVerticalGroup(
             informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(informationPanelLayout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(authorLabel))
         );
 
-        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
-        container.setLayout(containerLayout);
-        containerLayout.setHorizontalGroup(
-            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        containerLayout.setVerticalGroup(
-            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        container.setLayout(new java.awt.GridLayout(6, 2, 10, 10));
+
+        dateLabel.setText("Date:");
+        container.add(dateLabel);
+
+        jLabel1.setText("December 21st, 2018");
+        container.add(jLabel1);
+
+        jLabel2.setText("Training Loss:");
+        container.add(jLabel2);
+
+        jLabel3.setText("0.00485");
+        container.add(jLabel3);
+
+        jLabel4.setText("Testing Loss:");
+        container.add(jLabel4);
+
+        jLabel5.setText("0.00285");
+        container.add(jLabel5);
+
+        jLabel6.setText("Data average:");
+        container.add(jLabel6);
+
+        jLabel7.setText("jLabel7");
+        container.add(jLabel7);
+
+        percentageLabel.setText("Percentage Loss:");
+        container.add(percentageLabel);
+
+        jLabel9.setText("jLabel9");
+        container.add(jLabel9);
+
+        jLabel10.setText("jLabel10");
+        container.add(jLabel10);
+
+        jLabel11.setText("jLabel11");
+        container.add(jLabel11);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,7 +119,7 @@ public class EvaluateOutput extends javax.swing.JFrame {
                 .addComponent(informationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         pack();
@@ -124,7 +163,19 @@ public class EvaluateOutput extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel authorLabel;
     public javax.swing.JPanel container;
+    private javax.swing.JLabel dateLabel;
     public javax.swing.JPanel informationPanel;
-    public javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel percentageLabel;
+    public javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
