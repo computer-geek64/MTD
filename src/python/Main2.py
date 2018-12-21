@@ -46,7 +46,7 @@ for i in range(5):
         dnn.restore("./models/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations) + "/model")
         print(dnn.test(x_data, y_data))
         print(average_train)
-    if "test" in sys.argv:
+    if "eval" in sys.argv:
         dnn.restore("./models/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations) + "/model")
         print(dnn.test(x_data_test, y_data_test))
         print(average_test)
