@@ -1,0 +1,20 @@
+#!/usr/bin/python3
+# loop
+# Ashish D'Souza
+# @computer-geek64
+# December 21st, 2018
+
+import sys
+import os
+from time import sleep
+
+while True:
+	if os.path.exists("/root/PycharmProjects/MTD/src/python/eval.txt"):
+		sleep(1)
+		file = open("/root/PycharmProjects/MTD/src/python/eval.txt", "r")
+		date = [x for x in file.read().split("\n") if x]
+		year = date[0]
+		month = date[1]
+		day = date[2]
+		os.system("rm /root/PycharmProjects/MTD/src/python/eval.txt")
+		os.system("python3 /root/PycharmProjects/MTD/src/python/Main2.py eval > evalout.txt")
