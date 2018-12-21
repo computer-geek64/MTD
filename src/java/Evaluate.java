@@ -1,3 +1,11 @@
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -90,12 +98,27 @@ public class Evaluate extends javax.swing.JFrame {
         buttonPanel.add(back);
 
         submit.setText("Submit");
+        submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitActionPerformed(evt);
+            }
+        });
         buttonPanel.add(submit);
 
         reset.setText("Reset");
+        reset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetActionPerformed(evt);
+            }
+        });
         buttonPanel.add(reset);
 
         exit.setText("Exit");
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
         buttonPanel.add(exit);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,7 +150,63 @@ public class Evaluate extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
+        resetActionPerformed(evt);
+        this.setVisible(false);
+        MTD.home.setVisible(true);
     }//GEN-LAST:event_backActionPerformed
+
+    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
+        // TODO add your handling code here:
+        try {
+            int year = Integer.parseInt(yearTextField.getText());
+            int month = monthComboBox.getSelectedIndex();
+            int day = Integer.parseInt(dayTextField.getText());
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            cal.setTime(new Date(year, month, day));
+            cal.getTime();
+            if(year != 2018) {
+                throw new Exception();
+            }
+            
+            resetActionPerformed(evt);
+            
+            Runtime runtime = Runtime.getRuntime();
+            Process process = runtime.exec("fake");
+            
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+            
+            String line;
+            while((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+            
+            this.setVisible(false);
+            MTD.home.setVisible(false);
+        }
+        catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid date.", "Error", 0);
+        }
+    }//GEN-LAST:event_submitActionPerformed
+
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
+        // TODO add your handling code here:
+        yearTextField.setText("");
+        monthComboBox.setSelectedIndex(0);
+        dayTextField.setText("");
+    }//GEN-LAST:event_resetActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Thank you for using this program.\n"
+                + "Please continue to support open-source software by sharing "
+                + "this project's GitHub repository at "
+                + "\"https://computer-geek64.github.io/MTD/\"", "Thank you!",
+                JOptionPane.INFORMATION_MESSAGE);
+        this.setVisible(false);
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
 
     /**
      * @param args the command line arguments

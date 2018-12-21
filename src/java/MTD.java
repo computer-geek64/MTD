@@ -28,8 +28,6 @@ public class MTD {
         home.submit.setEnabled(false);
         home.reset.setEnabled(false);
         
-        evaluate.formattedTextField.setValue(new Date(2018 - 1900, 12, 20));
-        
         home.setVisible(true);
         evaluate.setVisible(false);
     }

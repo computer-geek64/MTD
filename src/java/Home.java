@@ -150,11 +150,17 @@ public class Home extends javax.swing.JFrame {
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
-        System.out.println(modeComboBox.getSelectedItem());
-        System.out.println(locationComboBox.getSelectedItem());
-        resetActionPerformed(evt);
-        this.setVisible(false);
-        MTD.evaluate.setVisible(true);
+        if(modeComboBox.getSelectedItem().equals("Evaluate")) {
+            resetActionPerformed(evt);
+            this.setVisible(false);
+            MTD.evaluate.setVisible(true);
+        }
+        else {
+            resetActionPerformed(evt);
+            this.setVisible(false);
+            System.out.println("I haven't done that part yet.");
+            System.exit(0);
+        }
     }//GEN-LAST:event_submitActionPerformed
 
     private void modeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modeComboBoxActionPerformed
