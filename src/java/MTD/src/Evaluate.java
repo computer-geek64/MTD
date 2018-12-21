@@ -38,6 +38,9 @@ public class Evaluate extends javax.swing.JFrame {
         dayTextField = new javax.swing.JTextField();
         buttonPanel = new javax.swing.JPanel();
         back = new javax.swing.JButton();
+        submit = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,7 +82,21 @@ public class Evaluate extends javax.swing.JFrame {
         container.add(dayTextField);
 
         back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
         buttonPanel.add(back);
+
+        submit.setText("Submit");
+        buttonPanel.add(submit);
+
+        reset.setText("Reset");
+        buttonPanel.add(reset);
+
+        exit.setText("Exit");
+        buttonPanel.add(exit);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,6 +124,10 @@ public class Evaluate extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,9 +171,12 @@ public class Evaluate extends javax.swing.JFrame {
     public javax.swing.JPanel container;
     public javax.swing.JLabel dayLabel;
     public javax.swing.JTextField dayTextField;
+    public javax.swing.JButton exit;
     public javax.swing.JPanel informationPanel;
     public javax.swing.JComboBox<String> monthComboBox;
     public javax.swing.JLabel monthLabel;
+    public javax.swing.JButton reset;
+    public javax.swing.JButton submit;
     public javax.swing.JLabel titleLabel;
     public javax.swing.JLabel yearLabel;
     public javax.swing.JTextField yearTextField;
