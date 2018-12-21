@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -37,6 +38,8 @@ public class Home extends javax.swing.JFrame {
         modeComboBox = new javax.swing.JComboBox<>();
         locationLabel = new javax.swing.JLabel();
         locationComboBox = new javax.swing.JComboBox<>();
+        deepNeuralNetworkButton = new javax.swing.JButton();
+        tensorboardButton = new javax.swing.JButton();
         buttonPanel = new javax.swing.JPanel();
         submit = new javax.swing.JButton();
         reset = new javax.swing.JButton();
@@ -54,7 +57,7 @@ public class Home extends javax.swing.JFrame {
         informationPanel.setLayout(informationPanelLayout);
         informationPanelLayout.setHorizontalGroup(
             informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(authorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         informationPanelLayout.setVerticalGroup(
@@ -65,7 +68,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(authorLabel))
         );
 
-        container.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
+        container.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
 
         modeLabel.setText("Mode:");
         container.add(modeLabel);
@@ -88,6 +91,22 @@ public class Home extends javax.swing.JFrame {
             }
         });
         container.add(locationComboBox);
+
+        deepNeuralNetworkButton.setText("Deep Neural Network");
+        deepNeuralNetworkButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deepNeuralNetworkButtonActionPerformed(evt);
+            }
+        });
+        container.add(deepNeuralNetworkButton);
+
+        tensorboardButton.setText("TensorBoard");
+        tensorboardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tensorboardButtonActionPerformed(evt);
+            }
+        });
+        container.add(tensorboardButton);
 
         submit.setText("Submit");
         submit.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +217,23 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_locationComboBoxActionPerformed
 
+    private void deepNeuralNetworkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deepNeuralNetworkButtonActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null,
+                "<html><img src=\"file:///root/NetBeansProjects/MTD/src/MTD/src/java/image.png\"/></html>",
+                "Deep Neural Network", JOptionPane.PLAIN_MESSAGE);
+    }//GEN-LAST:event_deepNeuralNetworkButtonActionPerformed
+
+    private void tensorboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tensorboardButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            Runtime.getRuntime().exec("firefox-esr localhost:6006");
+        }
+        catch(IOException ex) {
+            JOptionPane.showMessageDialog(null, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_tensorboardButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -246,6 +282,7 @@ public class Home extends javax.swing.JFrame {
     public javax.swing.JLabel authorLabel;
     public javax.swing.JPanel buttonPanel;
     public javax.swing.JPanel container;
+    public javax.swing.JButton deepNeuralNetworkButton;
     public javax.swing.JButton exit;
     public javax.swing.JPanel informationPanel;
     public javax.swing.JComboBox<String> locationComboBox;
@@ -254,6 +291,7 @@ public class Home extends javax.swing.JFrame {
     public javax.swing.JLabel modeLabel;
     public javax.swing.JButton reset;
     public javax.swing.JButton submit;
+    private javax.swing.JButton tensorboardButton;
     public javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
