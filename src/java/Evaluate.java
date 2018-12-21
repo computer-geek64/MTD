@@ -83,6 +83,11 @@ public class Evaluate extends javax.swing.JFrame {
         container.add(monthLabel);
 
         monthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
+        monthComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthComboBoxActionPerformed(evt);
+            }
+        });
         container.add(monthComboBox);
 
         dayLabel.setText("Day:");
@@ -184,6 +189,7 @@ public class Evaluate extends javax.swing.JFrame {
             
             this.setVisible(false);
             MTD.home.setVisible(false);
+            MTD.evaluateOutput.setVisible(true);
         }
         catch(Exception ex) {
             JOptionPane.showMessageDialog(null, "Please enter a valid date.", "Error", 0);
@@ -207,6 +213,18 @@ public class Evaluate extends javax.swing.JFrame {
         this.setVisible(false);
         System.exit(0);
     }//GEN-LAST:event_exitActionPerformed
+
+    private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() == 0) {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+        else {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+    }//GEN-LAST:event_monthComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
