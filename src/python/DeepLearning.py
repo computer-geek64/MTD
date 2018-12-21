@@ -38,7 +38,8 @@ class DeepNeuralNetwork:
         self.summaries = tf.summary.merge_all()
         self.writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
 
-        init = tf.global_variables_initializer()
+        with tf.name_scope("init"):
+            init = tf.global_variables_initializer()
         self.sess = tf.Session()
 
         self.sess.run(init)

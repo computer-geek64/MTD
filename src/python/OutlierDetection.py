@@ -28,6 +28,7 @@ def statistical_outlier_detection(data, vector_index=0):
 
 # Detects outliers based on k-NN ML algorithm with Euclidean distance formula
 def knn_outlier_detection(data, k=3, logdir="./tensorboard/knn_outlier_detector/" + str(int(datetime.now().timestamp()))):
+    tf.reset_default_graph()
     training_data = tf.constant(data, dtype=tf.float32, name="training_data")  # Entire training dataset
     test_point = tf.placeholder(dtype=tf.float32, name="test_point")  # Current observation in training dataset
 
