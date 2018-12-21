@@ -28,17 +28,16 @@ public class EvaluateOutput extends javax.swing.JFrame {
         authorLabel = new javax.swing.JLabel();
         container = new javax.swing.JPanel();
         dateLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        percentageLabel = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        dateOutputLabel = new javax.swing.JLabel();
+        lossLabel = new javax.swing.JLabel();
+        lossOutputLabel = new javax.swing.JLabel();
+        actualValueLabel = new javax.swing.JLabel();
+        actualValueOutputLabel = new javax.swing.JLabel();
+        predictedValueLabel = new javax.swing.JLabel();
+        predictedValueOutputLabel = new javax.swing.JLabel();
+        buttonPanel = new javax.swing.JPanel();
+        back = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,43 +62,42 @@ public class EvaluateOutput extends javax.swing.JFrame {
                 .addComponent(authorLabel))
         );
 
-        container.setLayout(new java.awt.GridLayout(6, 2, 10, 10));
+        container.setLayout(new java.awt.GridLayout(4, 2, 10, 10));
 
         dateLabel.setText("Date:");
         container.add(dateLabel);
 
-        jLabel1.setText("December 21st, 2018");
-        container.add(jLabel1);
+        dateOutputLabel.setText("Month, Date, Year");
+        container.add(dateOutputLabel);
 
-        jLabel2.setText("Training Loss:");
-        container.add(jLabel2);
+        lossLabel.setText("Loss:");
+        container.add(lossLabel);
 
-        jLabel3.setText("0.00485");
-        container.add(jLabel3);
+        lossOutputLabel.setText("0.0");
+        container.add(lossOutputLabel);
 
-        jLabel4.setText("Testing Loss:");
-        container.add(jLabel4);
+        actualValueLabel.setText("Actual Value:");
+        container.add(actualValueLabel);
 
-        jLabel5.setText("0.00285");
-        container.add(jLabel5);
+        actualValueOutputLabel.setText("0.0 ppm");
+        container.add(actualValueOutputLabel);
 
-        jLabel6.setText("Data average:");
-        container.add(jLabel6);
+        predictedValueLabel.setText("Predicted Value:");
+        container.add(predictedValueLabel);
 
-        jLabel7.setText("jLabel7");
-        container.add(jLabel7);
+        predictedValueOutputLabel.setText("0.0 ppm");
+        container.add(predictedValueOutputLabel);
 
-        percentageLabel.setText("Percentage Loss:");
-        container.add(percentageLabel);
+        back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+        buttonPanel.add(back);
 
-        jLabel9.setText("jLabel9");
-        container.add(jLabel9);
-
-        jLabel10.setText("jLabel10");
-        container.add(jLabel10);
-
-        jLabel11.setText("jLabel11");
-        container.add(jLabel11);
+        exit.setText("Exit");
+        buttonPanel.add(exit);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,7 +107,8 @@ public class EvaluateOutput extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(informationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -119,11 +118,19 @@ public class EvaluateOutput extends javax.swing.JFrame {
                 .addComponent(informationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        MTD.home.setVisible(true);
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,21 +168,20 @@ public class EvaluateOutput extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JLabel actualValueLabel;
+    public javax.swing.JLabel actualValueOutputLabel;
     public javax.swing.JLabel authorLabel;
+    public javax.swing.JButton back;
+    public javax.swing.JPanel buttonPanel;
     public javax.swing.JPanel container;
-    private javax.swing.JLabel dateLabel;
+    public javax.swing.JLabel dateLabel;
+    public javax.swing.JLabel dateOutputLabel;
+    public javax.swing.JButton exit;
     public javax.swing.JPanel informationPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel percentageLabel;
+    public javax.swing.JLabel lossLabel;
+    public javax.swing.JLabel lossOutputLabel;
+    public javax.swing.JLabel predictedValueLabel;
+    public javax.swing.JLabel predictedValueOutputLabel;
     public javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

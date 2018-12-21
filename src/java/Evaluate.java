@@ -6,7 +6,11 @@
  */
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -209,20 +213,27 @@ public class Evaluate extends javax.swing.JFrame {
             
             resetActionPerformed(evt);
             
-            Runtime runtime = Runtime.getRuntime();
-            Process process = runtime.exec("fake");
+            PrintWriter printWriter = new PrintWriter("/root/PycharmProjects/MTD/src/python/eval.txt", "UTF-8");
+            printWriter.println("" + year);
+            printWriter.println("" + month);
+            printWriter.println("" + day);
+            printWriter.close();
             
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
+            Thread.sleep(30000);
             
-            String line;
-            while((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
+            FileReader fileReader = new FileReader("/root/PycharmProjects/MTD/src/python/evalout.txt");
+            int i;
+            while((i = fileReader.read()) != -1) {
+                System.out.print((char) i);
             }
+            Runtime.getRuntime().exec("rm /root/PycharmProjects/MTD/src/python/evalout.txt");
             
             this.setVisible(false);
             MTD.home.setVisible(false);
             MTD.evaluateOutput.setVisible(true);
+        }
+        catch(IOException ex) {
+            ex.printStackTrace();
         }
         catch(Exception ex) {
             JOptionPane.showMessageDialog(null, "Please enter a valid date.", "Error", 0);
