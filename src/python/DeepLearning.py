@@ -18,14 +18,14 @@ class DeepNeuralNetwork:
                 self.x_training_data = tf.placeholder(dtype=tf.float32, shape=[None, layers[0]], name="x_training_data")
 
             self.hidden_layers = []
-            with tf.name_scope("hidden_layer"):
-                self.hidden_layers.append(tf.layers.dense(self.x_training_data, layers[1], activation=activation_functions[1], name="hidden_layer"))
+            # with tf.name_scope("hidden_layer"):
+            self.hidden_layers.append(tf.layers.dense(self.x_training_data, layers[1], activation=activation_functions[1], name="hidden_layer"))
             for i in range(2, len(layers) - 1):
-                with tf.name_scope("hidden_layer" + str(i)):
-                    self.hidden_layers.append(tf.layers.dense(self.hidden_layers[-1], layers[i], activation=activation_functions[i], name="hidden_layer" + str(i)))
+                #with tf.name_scope("hidden_layer" + str(i)):
+                self.hidden_layers.append(tf.layers.dense(self.hidden_layers[-1], layers[i], activation=activation_functions[i], name="hidden_layer" + str(i)))
 
-            with tf.name_scope("output_layer"):
-                self.output_layer = tf.layers.dense(self.hidden_layers[-1], layers[-1], activation=activation_functions[-1], name="output_layer")
+            # with tf.name_scope("output_layer"):
+            self.output_layer = tf.layers.dense(self.hidden_layers[-1], layers[-1], activation=activation_functions[-1], name="output_layer")
 
         with tf.name_scope("loss"):
             self.loss = tf.divide(tf.reduce_sum(tf.abs(tf.subtract(self.y_training_data, self.output_layer))), tf.cast(tf.shape(self.y_training_data)[0], dtype=tf.float32))
@@ -38,8 +38,7 @@ class DeepNeuralNetwork:
         self.summaries = tf.summary.merge_all()
         self.writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
 
-        with tf.name_scope("init"):
-            init = tf.global_variables_initializer()
+        init = tf.global_variables_initializer()
         self.sess = tf.Session()
 
         self.sess.run(init)

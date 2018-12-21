@@ -6,14 +6,17 @@
 
 import Data
 import DeepLearning
+from DownloadData import DownloadData
 import tensorflow as tf
 import numpy as np
 from datetime import datetime
 import os
-from DownloadData import DownloadData
+import sys
 
 
 parameters = ["Temp", "NO2", "NOX", "NOY", "RH", "Wind Speed V", "SO2 Trace Level", "Ozone"]
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 download_data = DownloadData(parameters)
 results = download_data.download_training_data()
@@ -42,16 +45,26 @@ for i in range(5):
             os.makedirs(save_path)
         dnn.save(os.path.join(save_path, "model"))
     average = Data.mean(np.array(y_data)[:, 0])
-    print("Training:")
-    print("\tLoss: " + str(loss))
-    print("\tAverage: " + str(average))
-    print("\tPercentage: " + str(round(loss / average * 100, 2)) + "%")
+    if "train" in sys.argv:
+        print(loss)
+        print(average)
+        print(round(loss / average * 100, 2))
+    elif "test" in sys.argv:
+        print(dnn.test(x_data_test, y_data_test))
+    elif "predict" in sys.argv:
+        print(dnn.predict(x_data_test[int(sys.argv[2]):int(sys.argv[2]) + 1]))
+        print(y_data_test[int(sys.argv[2]):int(sys.argv[2]) + 1])
+    else:
+        print("Training:")
+        print("\tLoss: " + str(loss))
+        print("\tAverage: " + str(average))
+        print("\tPercentage: " + str(round(loss / average * 100, 2)) + "%")
 
-    print("Testing:")
-    print("\t" + str(dnn.predict(x_data_test[:1])))
-    print("\t" + str(y_data_test[:1]))
-    average = Data.mean(y_data_test, vector_index=0)
-    loss = dnn.test(x_data_test, y_data_test)
-    print("\tAverage: " + str(average))
-    print("\tPercentage: " + str(round(loss / average * 100, 2)) + "%")
-    print("\tLoss: " + str(loss))
+        print("Testing:")
+        print("\t" + str(dnn.predict(x_data_test[:1])))
+        print("\t" + str(y_data_test[:1]))
+        average = Data.mean(y_data_test, vector_index=0)
+        loss = dnn.test(x_data_test, y_data_test)
+        print("\tAverage: " + str(average))
+        print("\tPercentage: " + str(round(loss / average * 100, 2)) + "%")
+        print("\tLoss: " + str(loss))
