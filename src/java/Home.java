@@ -1,9 +1,12 @@
+
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author root
@@ -32,11 +35,11 @@ public class Home extends javax.swing.JFrame {
         container = new javax.swing.JPanel();
         modeLabel = new javax.swing.JLabel();
         modeComboBox = new javax.swing.JComboBox<>();
-        yearLabel = new javax.swing.JLabel();
-        yearTextField = new javax.swing.JTextField();
+        locationLabel = new javax.swing.JLabel();
+        locationComboBox = new javax.swing.JComboBox<>();
         buttonPanel = new javax.swing.JPanel();
         submit = new javax.swing.JButton();
-        clear = new javax.swing.JButton();
+        reset = new javax.swing.JButton();
         exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,7 +70,7 @@ public class Home extends javax.swing.JFrame {
         modeLabel.setText("Mode:");
         container.add(modeLabel);
 
-        modeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Evaluation", "Prediction" }));
+        modeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Evaluate", "Predict" }));
         modeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 modeComboBoxActionPerformed(evt);
@@ -75,9 +78,16 @@ public class Home extends javax.swing.JFrame {
         });
         container.add(modeComboBox);
 
-        yearLabel.setText("Year:");
-        container.add(yearLabel);
-        container.add(yearTextField);
+        locationLabel.setText("Location:");
+        container.add(locationLabel);
+
+        locationComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "New Castle County" }));
+        locationComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                locationComboBoxActionPerformed(evt);
+            }
+        });
+        container.add(locationComboBox);
 
         submit.setText("Submit");
         submit.addActionListener(new java.awt.event.ActionListener() {
@@ -87,13 +97,13 @@ public class Home extends javax.swing.JFrame {
         });
         buttonPanel.add(submit);
 
-        clear.setText("Clear");
-        clear.addActionListener(new java.awt.event.ActionListener() {
+        reset.setText("Reset");
+        reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearActionPerformed(evt);
+                resetActionPerformed(evt);
             }
         });
-        buttonPanel.add(clear);
+        buttonPanel.add(reset);
 
         exit.setText("Exit");
         exit.addActionListener(new java.awt.event.ActionListener() {
@@ -130,39 +140,57 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
+    private void resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetActionPerformed
         // TODO add your handling code here:
         modeComboBox.setSelectedIndex(0);
-        yearTextField.setText("");
+        locationComboBox.setSelectedIndex(0);
         submit.setEnabled(false);
-        clear.setEnabled(false);
-    }//GEN-LAST:event_clearActionPerformed
+        reset.setEnabled(false);
+    }//GEN-LAST:event_resetActionPerformed
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         // TODO add your handling code here:
         System.out.println(modeComboBox.getSelectedItem());
-        System.out.println(yearTextField.getText());
-        clearActionPerformed(evt);
+        System.out.println(locationComboBox.getSelectedItem());
+        resetActionPerformed(evt);
         this.setVisible(false);
+        MTD.evaluate.setVisible(true);
     }//GEN-LAST:event_submitActionPerformed
 
     private void modeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modeComboBoxActionPerformed
         // TODO add your handling code here:
-        if(!modeComboBox.getSelectedItem().equals(" ")) {
+        JComboBox[] comboBoxes = {modeComboBox, locationComboBox};
+        if (checkComboBoxes(comboBoxes)) {
             submit.setEnabled(true);
-            clear.setEnabled(true);
-        }
-        else {
+            reset.setEnabled(true);
+        } else {
             submit.setEnabled(false);
-            clear.setEnabled(false);
+            reset.setEnabled(false);
         }
     }//GEN-LAST:event_modeComboBoxActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
         // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Thank you for using this program.\n"
+                + "Please continue to support open-source software by sharing "
+                + "this project's GitHub repository at "
+                + "\"https://computer-geek64.github.io/MTD/\"", "Thank you!",
+                JOptionPane.INFORMATION_MESSAGE);
         this.setVisible(false);
         System.exit(0);
     }//GEN-LAST:event_exitActionPerformed
+
+    private void locationComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locationComboBoxActionPerformed
+        // TODO add your handling code here:
+        JComboBox[] comboBoxes = {modeComboBox, locationComboBox};
+        if (checkComboBoxes(comboBoxes)) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        } else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_locationComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,18 +227,27 @@ public class Home extends javax.swing.JFrame {
         });
     }
 
+    private boolean checkComboBoxes(JComboBox[] comboBoxes) {
+        for (int i = 0; i < comboBoxes.length; i++) {
+            if (comboBoxes[i].getSelectedIndex() == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel authorLabel;
     public javax.swing.JPanel buttonPanel;
-    public javax.swing.JButton clear;
     public javax.swing.JPanel container;
     public javax.swing.JButton exit;
     public javax.swing.JPanel informationPanel;
-    private javax.swing.JComboBox<String> modeComboBox;
-    private javax.swing.JLabel modeLabel;
+    public javax.swing.JComboBox<String> locationComboBox;
+    public javax.swing.JLabel locationLabel;
+    public javax.swing.JComboBox<String> modeComboBox;
+    public javax.swing.JLabel modeLabel;
+    public javax.swing.JButton reset;
     public javax.swing.JButton submit;
     public javax.swing.JLabel titleLabel;
-    private javax.swing.JLabel yearLabel;
-    private javax.swing.JTextField yearTextField;
     // End of variables declaration//GEN-END:variables
 }
