@@ -38,5 +38,7 @@ public class MTD {
         home.setVisible(true);
         evaluate.setVisible(false);
         evaluateOutput.setVisible(false);
+        
+        JOptionPane.showMessageDialog(null, "<html><img src=\"./image.png\"/></html>", "Dotnet", 0);
     }
 }
