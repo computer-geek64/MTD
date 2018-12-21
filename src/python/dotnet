@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+# dotnet
+# Ashish D'Souza (computer-geek64)
+# December 20th, 2018
+
+import sys
+import os
+
+layers = sys.argv[1:-1]
+
+os.system("/root/Documents/Scripts/dependencies/dotnets.py " + " ".join(layers) + " | dot -T png > " + os.getcwd() + "/" + sys.argv[-1])
