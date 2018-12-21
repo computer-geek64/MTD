@@ -27,6 +27,11 @@ results_test = download_data.download_testing_data()
 data_test = download_data.format_data(results_test)
 x_data_test, y_data_test = download_data.remove_outliers(data_test, 3)
 
+average_train = Data.mean([data[observation][-1] for observation in range(len(np.array(data)[:, -3])) if
+                           8 <= data[observation][-3] <= 18], vector_index=0)
+average_test = Data.mean([data_test[observation][-1] for observation in range(len(np.array(data_test)[:, -3])) if
+                          8 <= data_test[observation][-3] <= 18], vector_index=0)
+
 optimal_dnn = float("inf")
 for i in range(5):
     layers = [len(x_data[0]), 6, 4, 1]
@@ -37,34 +42,37 @@ for i in range(5):
     dnn_logdir = "./tensorboard/dnn/" + str(int(datetime.now().timestamp())) + "/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations)
 
     dnn = DeepLearning.DeepNeuralNetwork(layers, activation_functions, optimizer, learning_rate, dnn_logdir)
-    loss = dnn.train(x_data, y_data, iterations)
-    if optimal_dnn > loss:
-        optimal_dnn = loss
+    if "train" in sys.argv:
+        dnn.restore("./models/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations) + "/model")
+        print(dnn.test(x_data, y_data))
+        print(average_train)
+    if "test" in sys.argv:
+        dnn.restore("./models/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations) + "/model")
+        print(dnn.test(x_data_test, y_data_test))
+        print(average_test)
+        exit(0)
+    elif "predict" in sys.argv:
+        dnn.restore("./models/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations) + "/model")
+        print(dnn.predict(x_data_test[int(sys.argv[2]):int(sys.argv[2]) + 1]))
+        print(y_data_test[int(sys.argv[2]):int(sys.argv[2]) + 1])
+        exit(0)
+
+    loss_train = dnn.train(x_data, y_data, iterations)
+    loss_test = dnn.test(x_data_test, y_data_test)
+    if optimal_dnn > loss_test:
+        optimal_dnn = loss_test
         save_path = "./models/" + "-".join(list(map(str, layers))) + "_" + activation_functions[1].__name__ + "/" + optimizer.__name__ + "_" + str(learning_rate) + "_" + str(iterations) + "/"
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         dnn.save(os.path.join(save_path, "model"))
-    average = Data.mean(np.array(y_data)[:, 0])
-    if "train" in sys.argv:
-        print(loss)
-        print(average)
-        print(round(loss / average * 100, 2))
-    elif "test" in sys.argv:
-        print(dnn.test(x_data_test, y_data_test))
-    elif "predict" in sys.argv:
-        print(dnn.predict(x_data_test[int(sys.argv[2]):int(sys.argv[2]) + 1]))
-        print(y_data_test[int(sys.argv[2]):int(sys.argv[2]) + 1])
-    else:
-        print("Training:")
-        print("\tLoss: " + str(loss))
-        print("\tAverage: " + str(average))
-        print("\tPercentage: " + str(round(loss / average * 100, 2)) + "%")
+    print("Training:")
+    print("\tLoss: " + str(loss_train))
+    print("\tAverage: " + str(average_train))
+    print("\tPercentage: " + str(round(loss_train / average_train * 100, 2)) + "%")
 
-        print("Testing:")
-        print("\t" + str(dnn.predict(x_data_test[:1])))
-        print("\t" + str(y_data_test[:1]))
-        average = Data.mean(y_data_test, vector_index=0)
-        loss = dnn.test(x_data_test, y_data_test)
-        print("\tAverage: " + str(average))
-        print("\tPercentage: " + str(round(loss / average * 100, 2)) + "%")
-        print("\tLoss: " + str(loss))
+    print("Testing:")
+    print("\t" + str(dnn.predict(x_data_test[:1])))
+    print("\t" + str(y_data_test[:1]))
+    print("\tAverage: " + str(average_test))
+    print("\tPercentage: " + str(round(loss_test / average_test * 100, 2)) + "%")
+    print("\tLoss: " + str(loss_test))
