@@ -1,21 +1,16 @@
+/**
+ * Evaluate.java
+ * Ashish D'Souza
+ * @computer-geek64
+ * December 20th, 2018
+ */
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author root
- */
 public class Evaluate extends javax.swing.JFrame {
 
     /**
@@ -77,6 +72,25 @@ public class Evaluate extends javax.swing.JFrame {
 
         yearLabel.setText("Year:");
         container.add(yearLabel);
+
+        yearTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                yearTextFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                yearTextFieldFocusLost(evt);
+            }
+        });
+        yearTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                yearTextFieldActionPerformed(evt);
+            }
+        });
+        yearTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                yearTextFieldKeyTyped(evt);
+            }
+        });
         container.add(yearTextField);
 
         monthLabel.setText("Month:");
@@ -92,6 +106,25 @@ public class Evaluate extends javax.swing.JFrame {
 
         dayLabel.setText("Day:");
         container.add(dayLabel);
+
+        dayTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                dayTextFieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dayTextFieldFocusLost(evt);
+            }
+        });
+        dayTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dayTextFieldActionPerformed(evt);
+            }
+        });
+        dayTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                dayTextFieldKeyTyped(evt);
+            }
+        });
         container.add(dayTextField);
 
         back.setText("Back");
@@ -216,15 +249,111 @@ public class Evaluate extends javax.swing.JFrame {
 
     private void monthComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthComboBoxActionPerformed
         // TODO add your handling code here:
-        if(monthComboBox.getSelectedIndex() == 0) {
-            submit.setEnabled(false);
-            reset.setEnabled(false);
-        }
-        else {
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
             submit.setEnabled(true);
             reset.setEnabled(true);
         }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
     }//GEN-LAST:event_monthComboBoxActionPerformed
+
+    private void yearTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearTextFieldActionPerformed
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_yearTextFieldActionPerformed
+
+    private void dayTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayTextFieldActionPerformed
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_dayTextFieldActionPerformed
+
+    private void dayTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dayTextFieldFocusLost
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_dayTextFieldFocusLost
+
+    private void yearTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_yearTextFieldFocusLost
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_yearTextFieldFocusLost
+
+    private void yearTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_yearTextFieldKeyTyped
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_yearTextFieldKeyTyped
+
+    private void dayTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dayTextFieldKeyTyped
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_dayTextFieldKeyTyped
+
+    private void yearTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_yearTextFieldFocusGained
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_yearTextFieldFocusGained
+
+    private void dayTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dayTextFieldFocusGained
+        // TODO add your handling code here:
+        if(monthComboBox.getSelectedIndex() != 0 && !yearTextField.getText().equals("") && !dayTextField.getText().equals("")) {
+            submit.setEnabled(true);
+            reset.setEnabled(true);
+        }
+        else {
+            submit.setEnabled(false);
+            reset.setEnabled(false);
+        }
+    }//GEN-LAST:event_dayTextFieldFocusGained
 
     /**
      * @param args the command line arguments

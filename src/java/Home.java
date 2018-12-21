@@ -1,17 +1,13 @@
-
-import java.io.IOException;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
- *
- * @author root
- */
+ * Home.java
+ * Ashish D'Souza
+ * @computer-geek64
+ * December 20th, 2018
+*/
+
+import java.io.*;
+import javax.swing.*;
+
 public class Home extends javax.swing.JFrame {
 
     /**
