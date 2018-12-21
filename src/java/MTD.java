@@ -1,8 +1,10 @@
-/** MTD.java
- * Ashish D'Souza (computer-geek64)
+/**
+ * MTD.java
+ * Ashish D'Souza
+ * @computer-geek64
  * December 20th, 2018
  */
-import java.util.Date;
+
 import javax.swing.*;
 
 public class MTD {
