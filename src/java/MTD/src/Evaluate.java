@@ -26,17 +26,83 @@ public class Evaluate extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        informationPanel = new javax.swing.JPanel();
+        titleLabel = new javax.swing.JLabel();
+        authorLabel = new javax.swing.JLabel();
+        container = new javax.swing.JPanel();
+        yearLabel = new javax.swing.JLabel();
+        yearTextField = new javax.swing.JTextField();
+        monthLabel = new javax.swing.JLabel();
+        monthComboBox = new javax.swing.JComboBox<>();
+        dayLabel = new javax.swing.JLabel();
+        dayTextField = new javax.swing.JTextField();
+        buttonPanel = new javax.swing.JPanel();
+        back = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("Deep Learning for Tropospheric Ozone Prediction");
+
+        authorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        authorLabel.setText("Ashish D'Souza, Engineering Design Technology");
+
+        javax.swing.GroupLayout informationPanelLayout = new javax.swing.GroupLayout(informationPanel);
+        informationPanel.setLayout(informationPanelLayout);
+        informationPanelLayout.setHorizontalGroup(
+            informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+            .addComponent(authorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        informationPanelLayout.setVerticalGroup(
+            informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(informationPanelLayout.createSequentialGroup()
+                .addComponent(titleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(authorLabel))
+        );
+
+        container.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
+
+        yearLabel.setText("Year:");
+        container.add(yearLabel);
+        container.add(yearTextField);
+
+        monthLabel.setText("Month:");
+        container.add(monthLabel);
+
+        monthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
+        container.add(monthComboBox);
+
+        dayLabel.setText("Day:");
+        container.add(dayLabel);
+        container.add(dayTextField);
+
+        back.setText("Back");
+        buttonPanel.add(back);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(informationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(informationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -78,5 +144,17 @@ public class Evaluate extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JLabel authorLabel;
+    public javax.swing.JButton back;
+    public javax.swing.JPanel buttonPanel;
+    public javax.swing.JPanel container;
+    public javax.swing.JLabel dayLabel;
+    public javax.swing.JTextField dayTextField;
+    public javax.swing.JPanel informationPanel;
+    public javax.swing.JComboBox<String> monthComboBox;
+    public javax.swing.JLabel monthLabel;
+    public javax.swing.JLabel titleLabel;
+    public javax.swing.JLabel yearLabel;
+    public javax.swing.JTextField yearTextField;
     // End of variables declaration//GEN-END:variables
 }
