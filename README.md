@@ -1,16 +1,16 @@
 # Deep Learning for Tropospheric Ozone Predictions
-*November 15th, 2018*
+*January 18th, 2019*
 
-The POLYTECH MTD is a Senior capstone project that involves utilizing the skills students gained throughout their education in their CTE pathway.
+The POLYTECH MTD is a senior capstone project that requires students to utilize the skills they acquired in their CTE pathway. My MTD, **Deep Learning for Tropospheric Ozone Predictions**, involves using a variety of software programs to develop a predictive machine learning algorithm with deep neural networks that has the ability to accurately forecast ground-level ozone.
 
 ## Getting Started
-Necessary materials
+This MTD is an entirely software-based product, requiring no additional physical hardware other than the basics to run the program.
 
 ### Prerequisites
-What things you need to do before installing and executing the software.
+What needs to be done before installing and executing the software.
 
 ## Installation
-The following installation procedures will give a comprehensive walkthrough depending on your operating system
+The following installation procedures will give a comprehensive walkthrough depending on your operating system.
 
 ### Linux/Unix
 1. Install and update packages
