@@ -1,7 +1,7 @@
 # Deep Learning for Tropospheric Ozone Predictions
 *November 15th, 2018*
 
-The POLYTECH MTD is...
+The POLYTECH MTD is a Senior capstone project that involves utilizing the skills students gained throughout their education in their CTE pathway.
 
 ## Getting Started
 Necessary materials
